@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Platform, StatusBar, StyleSheet } from "react-native";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feed from "./screens/Feed";
 import CreateStory from "./screens/CreateStory";
@@ -8,29 +8,34 @@ import CreateStory from "./screens/CreateStory";
 const Tab = createBottomTabNavigator();
 const BottomTabNavigator = ()=>{
     return (
-        <NavigationContainer>
-          <Tab.Navigator
-            screenOptions={({ route }) => ({
-              tabBarIcon: ({ focused, color, size }) => {
-                let iconName;
-                if (route.name === 'Feed') {
-                  iconName = focused
-                    ? 'book'
-                    : 'book-outline';
-                } else if (route.name === 'CreateStory') {
-                  iconName = focused ? 'create' : 'create-outline';
-                }
-                return <Ionicons name={iconName} size={size} color={color} />;
-              },
-            })}
-            tabBarOptions={{
-              activeTintColor: 'tomato',
-              inactiveTintColor: 'gray',
-            }}>
-            <Tab.Screen name="Feed" component={Feed} />
-            <Tab.Screen name="CreateStory" component={CreateStory} />
-          </Tab.Navigator>
-        </NavigationContainer>
+      <Tab.Navigator
+      labeled={false}
+      barStyle={styles.bottomTabStyle}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          if (route.name === "Feed") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "Create Story") {
+            iconName = focused ? "add-circle" : "add-circle-outline";
+          }
+          return (
+            <Ionicons
+              name={iconName}
+              size={RFValue(25)}
+              color={color}
+              style={styles.icons}
+            />
+          );
+        }
+      })}
+      activeColor={"#ee8249"}
+      inactiveColor={"gray"}
+    >
+      <Tab.Screen name="Feed" component={Feed} />
+      <Tab.Screen name="Create Story" component={CreateStory} />
+    </Tab.Navigator>
       );
 }
+
 export default BottomTabNavigator;
